@@ -1,7 +1,7 @@
 const express = require('express');
 // const corsMiddleware = require('./middlewares/cors');
 // const errorHandler = require('./middlewares/errorHandler');
-// const registerRouter = require('./routes');
+const registerRouter = require('./routes');
 
 const createApp = (db) => {
   const app = express();
@@ -14,7 +14,7 @@ const createApp = (db) => {
   // pass db (sequelize + models) to routes
   app.use(registerRouter(db));
 
-  app.use(errorHandler);
+  // app.use(errorHandler);
 
   return app;
 };
