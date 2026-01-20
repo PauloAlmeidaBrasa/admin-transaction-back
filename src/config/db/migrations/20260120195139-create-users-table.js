@@ -10,14 +10,12 @@ module.exports = {
         autoIncrement: true
       },
       ID_User: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.STRING,
         primaryKey: true,
-        autoIncrement: true
       },
       password: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.STRING,
         primaryKey: true,
-        autoIncrement: true
       },
       name: {
         type: Sequelize.STRING,
@@ -28,12 +26,16 @@ module.exports = {
         allowNull: false,
         unique: true
       },
-      createdAt: {
+      created_at: {
         type: Sequelize.DATE,
         allowNull: false
       },
-      updatedAt: {
+      updated_at: {
         type: Sequelize.DATE,
+        allowNull: false
+      },
+      access_level: {
+        type: Sequelize.INTEGER,
         allowNull: false
       }
     });

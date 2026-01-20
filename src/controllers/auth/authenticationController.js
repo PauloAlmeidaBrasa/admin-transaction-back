@@ -1,6 +1,5 @@
 // const { AuthenticationService } = require('@services/authenticationService');
 // const { UserRepository } = require('@repositories/user/UserRepository');
-const { json } = require('express');
 const { AuthRequestHandler } = require('./authRequestHandler');
 
 class AuthenticationController {
