@@ -25,6 +25,10 @@ class UserRepository {
       where: { client_id: clientId }
     });
   }
+  async createUser(data) {
+    const user = await this.User.create(data);
+    return user.id;
+  }
 }
 
 

@@ -11,9 +11,8 @@ class ClientService {
   }
 
   async getClientBySubdomain(subdomain) {
-    const client = await db.Client.findOne({ where: { subdomain } });
-  return client;
-}
+    return await this.clientRepository.findBySubdomain(subdomain);
+  }
 }
 
 module.exports = {

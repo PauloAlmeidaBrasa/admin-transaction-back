@@ -5,8 +5,6 @@ const {
   clientRoutes
 } = require('../routes/modulesRoutes');
 const authenticationRoutes = require('./authenticationRouter');
-const multiTenantMiddleware = require('../middlewares/multiTenantMiddleware')
-// const { authMiddleware } = require('middleware/authMiddleware');
 // const docRoutes = require('./docRouter');
 
 const registerRouter = (db) => {

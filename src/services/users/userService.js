@@ -18,21 +18,15 @@ class UserService {
     return user;
   }
 
-  async createUser(data) {
+  async createUser(data,clientId) {
+    
     const existing = await this.userRepository.findByEmail(data.email);
     if (existing) {
       throw new Error('Email already exists');
     }
 
-    // Temporary default (same behavior as before)
-    data.client_id = 1;
-
     const hashedPassword = await bcrypt.hash(data.password, 10);
-
-    const userData = {
-      ...data,
-      password: hashedPassword
-    };
+    const userData = await this.prepareUserData(data, clientId);
 
     const userIdCreated = await this.userRepository.createUser(userData);
     return userIdCreated;
@@ -44,6 +38,23 @@ class UserService {
 
   async deleteUser(id) {
     await this.userRepository.deleteUser(id);
+  }
+  async prepareUserData(data, clientId) {
+    const hashedPassword = await bcrypt.hash(data.password, 10);
+    const userData = {
+      ...data,
+      ID_user: data.cpf,
+      client_id: clientId,
+      password: hashedPassword,
+      created_at: Date.now(),
+      access_level: 3,
+      updated_at: Date.now()
+    };
+
+    delete userData.cpf;
+    
+
+    return userData;
   }
 }
 
