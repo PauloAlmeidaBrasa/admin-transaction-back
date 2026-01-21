@@ -9,7 +9,7 @@ module.exports = {
         primaryKey: true,
         autoIncrement: true
       },
-      ID_User: {
+      ID_user: {
         type: Sequelize.STRING,
         primaryKey: true,
       },
@@ -35,6 +35,10 @@ module.exports = {
         allowNull: false
       },
       access_level: {
+        type: Sequelize.INTEGER,
+        allowNull: false
+      },
+      client_id: {
         type: Sequelize.INTEGER,
         allowNull: false
       }
