@@ -4,7 +4,7 @@ const authMiddleware = require('../middlewares/authMiddleware');
 
 const {
   userRoutes,
-  // clientRoutes
+  clientRoutes
 } = require('../routes/modulesRoutes');
 
 const authenticationRoutes = require('./authenticationRouter');
@@ -23,7 +23,7 @@ const registerRouter = (db) => {
 
   // Protected routes
   router.use(`/${API_VERSION}`, authMiddleware, userRoutes(db));
-  // router.use(`/${API_VERSION}`, authMiddleware, clientRoutes(db));
+  router.use(`/${API_VERSION}`, authMiddleware, clientRoutes(db));
 
   return router;
 };
