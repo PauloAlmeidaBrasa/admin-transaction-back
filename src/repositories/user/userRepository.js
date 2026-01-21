@@ -4,7 +4,6 @@ class UserRepository {
 //   private user 
   constructor(db) {
     this.User = db.users;
-    console.log('DB keys:', Object.keys(db))
   }
 
   async findByEmail(email) {
@@ -15,6 +14,14 @@ class UserRepository {
 
   async findAllUser(clientId) {
     return this.User.findAll({
+       attributes: [
+        'id',
+        'email',
+        'name',
+        'ID_user',
+        'client_id',
+        'access_level',
+      ],
       where: { client_id: clientId }
     });
   }

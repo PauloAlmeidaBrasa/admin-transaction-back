@@ -1,6 +1,7 @@
 const { UserService } = require('../../services/users/userService');
 const { UserRepository } = require('../../repositories/user/userRepository');
-const { UserRequestHandler } = require('./userRequestHandler');
+// const { UserRequestHandler } = require('./userRequestHandler');
+const ApiResponse = require('../../utils/http/response');
 
 class UserController {
   constructor(db) {
@@ -13,7 +14,7 @@ class UserController {
     console.log("req.user.client_id", req.user.client_id)
 
     const users = await this.userService.findAll(req.user.client_id);
-    res.json(users);
+    return ApiResponse.success(res, 'users', users);
 
   }
   
