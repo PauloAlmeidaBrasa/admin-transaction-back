@@ -33,7 +33,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     updated_at: {
       type: DataTypes.DATE,
-      allowNull: false
+      allowNull: true
     },
     access_level: {
       type: DataTypes.INTEGER,
