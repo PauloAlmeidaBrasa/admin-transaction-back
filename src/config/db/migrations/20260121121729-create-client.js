@@ -27,6 +27,10 @@ module.exports = {
         allowNull: true,
         unique: true
       },
+      subdomain: {
+        type: Sequelize.STRING,
+        allowNull: false
+      },
     });
   },
 

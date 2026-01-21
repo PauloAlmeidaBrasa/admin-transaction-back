@@ -23,6 +23,10 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.DATE,
       allowNull: false
     },
+    subdomain: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
   }, {
     tableName: 'client',
     timestamps: false

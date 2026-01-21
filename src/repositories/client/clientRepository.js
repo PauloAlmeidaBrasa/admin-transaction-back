@@ -10,7 +10,8 @@ class ClientRepository {
           'id',
           'email',
           'name',
-          'address'
+          'address',
+          'subdomain'
       ],
       where: { id: clientId }
       });

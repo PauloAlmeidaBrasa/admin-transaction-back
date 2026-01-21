@@ -8,13 +8,15 @@ module.exports = {
         name: 'fake client',
         email: 'fakeemail@gmail.com',
         address: 'fake address',
-        created_at: new Date()
+        created_at: new Date(),
+        subdomain: 'fake'
       },
       {
         name: 'fake client 2',
         email: 'fakeemail2@gmail.com',
         address: 'fake address 2',
-        created_at: new Date()
+        created_at: new Date(),
+        subdomain: 'fake2'
       }
     ]);
   },

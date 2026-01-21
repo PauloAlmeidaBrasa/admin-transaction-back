@@ -10,6 +10,10 @@ class ClientService {
     return this.clientRepository.findAllClient(clientId);
   }
 
+  async getClientBySubdomain(subdomain) {
+    const client = await db.Client.findOne({ where: { subdomain } });
+  return client;
+}
 }
 
 module.exports = {
