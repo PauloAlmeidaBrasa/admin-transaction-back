@@ -20,6 +20,10 @@ module.exports = {
         primaryKey: false,
         allowNull: false
       },
+      id_user_transaction: {
+        type: Sequelize.INTEGER,
+        allowNull: false
+      },
       desc_transaction: {
         type: Sequelize.STRING,
         allowNull: true
