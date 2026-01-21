@@ -3,5 +3,5 @@ const userRoutes = require('./userRouter');
 
 module.exports = {
   userRoutes,
-  clientRoutes
+  // clientRoutes
 };
