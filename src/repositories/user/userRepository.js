@@ -29,6 +29,20 @@ class UserRepository {
     const user = await this.User.create(data);
     return user.id;
   }
+   async userById(idUser) {
+    const user = await this.User.findOne({
+      attributes: [
+        'id',
+        'email',
+        'name',
+        'ID_user',
+        'client_id',
+        'access_level',
+      ],
+      where: { id: idUser }
+    })
+    return user;
+  }
 }
 
 

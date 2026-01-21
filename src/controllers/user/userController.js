@@ -12,14 +12,11 @@ class UserController {
   }
 
   all = async (req, res) => {
-    console.log("req.user.client_id", req.user.client_id)
-
     const users = await this.userService.findAll(req.user.client_id);
     return ApiResponse.success(res, 'users', users);
 
   }
   store = async (req, res) => {
-
     const requestValidate = this.requestValidator.validateToCreate(req.body);
     if(requestValidate.error) {
       throw new Error(`User error: ${requestValidate.message}`)
@@ -27,6 +24,17 @@ class UserController {
 
     const userAdded = await this.userService.createUser(req.body,req.clientId);
     return ApiResponse.message(res, "User added", 201, { idAdded: userAdded });
+  }
+  getById = async (req,res) => {
+    const requestValidate = this.requestValidator.validateToGetById(req.params.id);
+    if(requestValidate.error) {
+      throw new Error(`User error: ${requestValidate.message}`)
+    }
+
+    const id = req.params.id
+    const user = await this.userService.getUserById(id);
+    console.log(user)
+    return  ApiResponse.success(res, 'user', user);
   }
   
 }

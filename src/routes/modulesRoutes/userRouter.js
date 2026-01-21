@@ -8,7 +8,7 @@ const userRoutes = (db) => {
   const router = Router();
   const controller = new UserController(db);
   router.get('/users', controller.all  );
-  // router.get('/user/:id', controller.getById);
+  router.get('/user/:id', controller.getById);
   router.post('/user/create', multiTenantMiddlewareFactory(db), controller.store);
   // router.patch('/user/update/:id', controller.update);
   // router.post('/user/delete/:id', controller.delete);

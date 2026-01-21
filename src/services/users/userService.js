@@ -11,7 +11,7 @@ class UserService {
   }
 
   async getUserById(id) {
-    const user = await this.userRepository.findByUserId(id);
+    const user = await this.userRepository.userById(id);
     if (!user) {
       throw new Error('User not found');
     }
