@@ -26,7 +26,7 @@ class UserController {
     }
 
     const userAdded = await this.userService.createUser(req.body,req.clientId);
-    return userAdded
+    return ApiResponse.message(res, "User added", 201, { idAdded: userAdded });
   }
   
 }

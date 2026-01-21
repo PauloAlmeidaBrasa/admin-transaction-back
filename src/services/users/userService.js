@@ -25,7 +25,6 @@ class UserService {
       throw new Error('Email already exists');
     }
 
-    const hashedPassword = await bcrypt.hash(data.password, 10);
     const userData = await this.prepareUserData(data, clientId);
 
     const userIdCreated = await this.userRepository.createUser(userData);
