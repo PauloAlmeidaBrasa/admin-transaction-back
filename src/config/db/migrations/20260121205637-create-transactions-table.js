@@ -3,7 +3,13 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up (queryInterface, Sequelize) {
-    await queryInterface.createTable('users', {
+    /**
+     * Add altering commands here.
+     *
+     * Example:
+     * await queryInterface.createTable('users', { id: Sequelize.INTEGER });
+     */
+      await queryInterface.createTable('transaction', {
       id: {
         type: Sequelize.INTEGER,
         primaryKey: true,
@@ -12,40 +18,32 @@ module.exports = {
       ID_user: {
         type: Sequelize.STRING,
         primaryKey: false,
-      },
-      password: {
-        type: Sequelize.STRING,
-        primaryKey: true,
-      },
-      name: {
-        type: Sequelize.STRING,
         allowNull: false
       },
-      email: {
+      desc_transaction: {
         type: Sequelize.STRING,
-        allowNull: false,
-        unique: true
+        allowNull: true
       },
-      created_at: {
+      date_transaction: {
         type: Sequelize.DATE,
         allowNull: false
       },
-      updated_at: {
-        type: Sequelize.DATE,
+      value_in_points: {
+        type: Sequelize.STRING,
+        allowNull: true
+      },
+      value: {
+        type: Sequelize.STRING,
+        allowNull: true
+      },
+      status: {
+        type: Sequelize.STRING,
         allowNull: false
       },
-      access_level: {
-        type: Sequelize.INTEGER,
-        allowNull: false
-      },
-      client_id: {
-        type: Sequelize.INTEGER,
-        allowNull: false
-      }
     });
   },
 
   async down (queryInterface) {
-    await queryInterface.dropTable('users');
+    await queryInterface.dropTable('transaction');
   }
 };

@@ -13,6 +13,13 @@ class ApiResponse {
       },
     });
   }
+  static message(res, message, statusCode = 200, additionalData = {}) {
+    return res.status(statusCode).json({
+      status: true,
+      message,
+      ...additionalData, 
+    });
+  }
 }
 
 module.exports = ApiResponse;

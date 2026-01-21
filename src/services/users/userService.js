@@ -11,7 +11,7 @@ class UserService {
   }
 
   async getUserById(id) {
-    const user = await this.userRepository.findByUserId(id);
+    const user = await this.userRepository.userById(id);
     if (!user) {
       throw new Error('User not found');
     }
@@ -25,7 +25,6 @@ class UserService {
       throw new Error('Email already exists');
     }
 
-    const hashedPassword = await bcrypt.hash(data.password, 10);
     const userData = await this.prepareUserData(data, clientId);
 
     const userIdCreated = await this.userRepository.createUser(userData);
@@ -33,11 +32,14 @@ class UserService {
   }
 
   async update(id, data) {
-    return this.userRepository.updateUser(id, data);
+    const idUser = id
+    const fieldsUpdate = data
+
+    return this.userRepository.updateUser(idUser, fieldsUpdate);
   }
 
   async deleteUser(id) {
-    await this.userRepository.deleteUser(id);
+    await this.userRepository.delete(id);
   }
   async prepareUserData(data, clientId) {
     const hashedPassword = await bcrypt.hash(data.password, 10);

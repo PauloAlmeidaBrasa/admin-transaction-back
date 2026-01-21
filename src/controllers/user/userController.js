@@ -12,21 +12,45 @@ class UserController {
   }
 
   all = async (req, res) => {
-    console.log("req.user.client_id", req.user.client_id)
-
-    const users = await this.userService.findAll(req.user.client_id);
+    const users = await this.userService.findAll(req.clientId);
     return ApiResponse.success(res, 'users', users);
 
   }
   store = async (req, res) => {
-
     const requestValidate = this.requestValidator.validateToCreate(req.body);
     if(requestValidate.error) {
       throw new Error(`User error: ${requestValidate.message}`)
     }
 
     const userAdded = await this.userService.createUser(req.body,req.clientId);
-    return userAdded
+    return ApiResponse.message(res, "User added", 201, { idAdded: userAdded });
+  }
+  getById = async (req,res) => {
+    const requestValidate = this.requestValidator.validateToGetById(req.params.id);
+    if(requestValidate.error) {
+      throw new Error(`User error: ${requestValidate.message}`)
+    }
+
+    const id = req.params.id
+    const user = await this.userService.getUserById(id);
+    console.log(user)
+    return  ApiResponse.success(res, 'user', user);
+  }
+  update = async (req,res) => {
+    const requestValidate = this.requestValidator.validateToUpdate(req.params.id);
+    if(requestValidate.error) {
+      throw new Error(`User error: ${requestValidate.message}`)
+    }
+    await this.userService.update(req.params.id,req.body);
+    return  ApiResponse.message(res, 'user updated');
+  }
+  delete = async (req,res) => {
+    const requestValidate = this.requestValidator.validateToDelete(req.params.id);
+    if(requestValidate.error) {
+      throw new Error(`User error: ${requestValidate.message}`)
+    }
+    await this.userService.deleteUser(req.params.id);
+    return  ApiResponse.message(res, 'user deleted');
   }
   
 }
