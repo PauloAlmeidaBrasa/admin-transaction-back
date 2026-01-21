@@ -39,7 +39,7 @@ class UserService {
   }
 
   async deleteUser(id) {
-    await this.userRepository.deleteUser(id);
+    await this.userRepository.delete(id);
   }
   async prepareUserData(data, clientId) {
     const hashedPassword = await bcrypt.hash(data.password, 10);

@@ -12,7 +12,7 @@ class UserController {
   }
 
   all = async (req, res) => {
-    const users = await this.userService.findAll(req.user.client_id);
+    const users = await this.userService.findAll(req.clientId);
     return ApiResponse.success(res, 'users', users);
 
   }
@@ -43,6 +43,14 @@ class UserController {
     }
     await this.userService.update(req.params.id,req.body);
     return  ApiResponse.message(res, 'user updated');
+  }
+  delete = async (req,res) => {
+    const requestValidate = this.requestValidator.validateToDelete(req.params.id);
+    if(requestValidate.error) {
+      throw new Error(`User error: ${requestValidate.message}`)
+    }
+    await this.userService.deleteUser(req.params.id);
+    return  ApiResponse.message(res, 'user deleted');
   }
   
 }

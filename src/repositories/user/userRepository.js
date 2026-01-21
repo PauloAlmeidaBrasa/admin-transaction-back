@@ -49,6 +49,12 @@ class UserRepository {
     });
     return result;
   }
+  async delete(idUser) {
+
+    return  await this.User.destroy({
+      where: { id: idUser }
+    });
+  }
 }
 
 
