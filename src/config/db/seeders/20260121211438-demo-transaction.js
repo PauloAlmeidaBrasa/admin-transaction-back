@@ -2,8 +2,8 @@
 
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
-  async up (queryInterface, Sequelize) {
-    await queryInterface.bulkInsert('users', [
+  async up (queryInterface) {
+    await queryInterface.bulkInsert('transaction', [
       {
         ID_User: '3123238322',
         id_user_transaction: 1,
@@ -11,7 +11,8 @@ module.exports = {
         date_transaction: new Date(),
         value_in_points: 10,
         value: 100,
-        status: 1
+        status: 1,
+        client_id: 1
       },
       {
         ID_User: '3123238322',
@@ -20,7 +21,8 @@ module.exports = {
         date_transaction: new Date(),
         value_in_points: 10,
         value: 10,
-        status: 1
+        status: 1,
+        client_id: 1
       }
     ]);
   },
@@ -32,5 +34,6 @@ module.exports = {
      * Example:
      * await queryInterface.bulkDelete('People', null, {});
      */
+    await queryInterface.bulkDelete('transaction', null, {});
   }
 };

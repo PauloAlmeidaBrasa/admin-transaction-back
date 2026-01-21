@@ -35,6 +35,10 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false
     },
+    client_id: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    },
   }, {
     tableName: 'transaction',
     timestamps: false

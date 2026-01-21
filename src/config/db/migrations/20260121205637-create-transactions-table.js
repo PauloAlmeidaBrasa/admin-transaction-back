@@ -44,6 +44,11 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false
       },
+      client_id: {
+        type: Sequelize.INTEGER,
+        allowNull: false
+      },
+      
     });
   },
 
