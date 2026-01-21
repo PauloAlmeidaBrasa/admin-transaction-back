@@ -1,19 +1,18 @@
-// const { AuthenticationService } = require('@services/authenticationService');
-// const { UserRepository } = require('@repositories/user/UserRepository');
+const { AuthenticationService } = require('../../services/authenticationService');
+const { UserRepository } = require('../../repositories/user/userRepository');
 const { AuthRequestHandler } = require('./authRequestHandler');
 
 class AuthenticationController {
   constructor(db) {
-    
-    // const userRepository = new UserRepository(db);
-    // this.authService = new AuthenticationService(userRepository);
+
+    const userRepository = new UserRepository(db);
+    this.authService = new AuthenticationService(userRepository);
   }
 
   auth = async (req, res) => {
-    return res.json('23')
     const requestValidate = AuthRequestHandler.validateAuth(
-      req.body.email,
-      req.body.password
+      req.body?.email,
+      req.body?.password
     );
 
     if (requestValidate.error) {
