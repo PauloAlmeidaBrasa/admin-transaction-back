@@ -1,14 +1,10 @@
 const { Router } = require('express');
 const authMiddleware = require('../middlewares/authMiddleware');
-
-
 const {
   userRoutes,
-  // clientRoutes
+  clientRoutes
 } = require('../routes/modulesRoutes');
-
 const authenticationRoutes = require('./authenticationRouter');
-// const { authMiddleware } = require('middleware/authMiddleware');
 // const docRoutes = require('./docRouter');
 
 const registerRouter = (db) => {
@@ -19,11 +15,12 @@ const registerRouter = (db) => {
   // console.log('✅ Database connected', userRoutes(db));
   // Public routes
   router.use(`/${API_VERSION}`, authenticationRoutes(db));
+  router.use(`/${API_VERSION}`, userRoutes(db));
 //   router.use(`/${API_VERSION}`, docRoutes());
 
   // Protected routes
   router.use(`/${API_VERSION}`, authMiddleware, userRoutes(db));
-  // router.use(`/${API_VERSION}`, authMiddleware, clientRoutes(db));
+  router.use(`/${API_VERSION}`, authMiddleware, clientRoutes(db));
 
   return router;
 };

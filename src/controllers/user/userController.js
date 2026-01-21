@@ -1,33 +1,32 @@
 const { UserService } = require('../../services/users/userService');
 const { UserRepository } = require('../../repositories/user/userRepository');
-// const { UserRequestHandler } = require('./userRequestHandler');
+const ApiResponse = require('../../utils/http/response');
+const { UserRequestHandler } = require('../user/userRequestHandler')
 
 class UserController {
   constructor(db) {
 
     const userRepository = new UserRepository(db);
     this.userService = new UserService(userRepository);
+    this.requestValidator = UserRequestHandler;
   }
 
   all = async (req, res) => {
-    const requestValidate = AuthRequestHandler.validateAuth(
-      req.body?.email,
-      req.body?.password
-    );
+    console.log("req.user.client_id", req.user.client_id)
 
-    if (requestValidate.error) {
-      throw new Error(`User error: ${requestValidate.message}`);
+    const users = await this.userService.findAll(req.user.client_id);
+    return ApiResponse.success(res, 'users', users);
+
+  }
+  store = async (req, res) => {
+
+    const requestValidate = this.requestValidator.validateToCreate(req.body);
+    if(requestValidate.error) {
+      throw new Error(`User error: ${requestValidate.message}`)
     }
 
-    const email = req.body.email;
-    const pass = req.body.password;
-
-    const user = await this.userService.authentication({
-      email,
-      password: pass
-    });
-
-    res.json(user);
+    const userAdded = await this.userService.createUser(req.body,req.clientId);
+    return userAdded
   }
   
 }

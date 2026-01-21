@@ -4,7 +4,6 @@ class UserRepository {
 //   private user 
   constructor(db) {
     this.User = db.users;
-    console.log('DB keys:', Object.keys(db))
   }
 
   async findByEmail(email) {
@@ -12,15 +11,27 @@ class UserRepository {
       where: { email }
     });
   }
+
+  async findAllUser(clientId) {
+    return this.User.findAll({
+       attributes: [
+        'id',
+        'email',
+        'name',
+        'ID_user',
+        'client_id',
+        'access_level',
+      ],
+      where: { client_id: clientId }
+    });
+  }
+  async createUser(data) {
+    const user = await this.User.create(data);
+    return user.id;
+  }
 }
 
-// class UserRepository {
 
-//   async findAllUser(clientId) {
-//     return User.findAll({
-//       where: { client_id: clientId }
-//     });
-//   }
 
 //   async findByUserId(id) {
 //     return User.findByPk(id);
