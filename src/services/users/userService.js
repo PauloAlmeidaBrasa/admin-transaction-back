@@ -1,9 +1,8 @@
 const bcrypt = require('bcrypt');
-const { UserRepository } = require('@repositories/user/UserRepository');
+const { UserRepository } = require('../../repositories/user/userRepository');
 
 class UserService {
   constructor(userRepository) {
-    // Repository is injected (recommended)
     this.userRepository = userRepository || new UserRepository();
   }
 

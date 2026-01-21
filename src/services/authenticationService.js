@@ -1,6 +1,5 @@
 const bcrypt = require('bcrypt');
-// const { UserRepository } = require('../repositories/authentication/authenticationRepository');
-const { signJwt } = require('../infra/auth/jwt');
+const { signJwt } = require('../infra/jwt/jwt');
 
 class AuthenticationService {
   constructor(userRepository) {
@@ -16,7 +15,6 @@ class AuthenticationService {
       throw error;
     }
 
-    console.log("PASSWORD  ", user)
     const passwordMatch = await bcrypt.compare(
       String(payload.password),
       String(user.password)
