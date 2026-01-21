@@ -43,6 +43,12 @@ class UserRepository {
     })
     return user;
   }
+  async updateUser(idUser, fieldsUpdate) {
+    const result = await this.User.update(fieldsUpdate, {
+      where: { id: idUser }
+    });
+    return result;
+  }
 }
 
 

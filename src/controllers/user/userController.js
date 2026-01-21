@@ -36,6 +36,14 @@ class UserController {
     console.log(user)
     return  ApiResponse.success(res, 'user', user);
   }
+  update = async (req,res) => {
+    const requestValidate = this.requestValidator.validateToUpdate(req.params.id);
+    if(requestValidate.error) {
+      throw new Error(`User error: ${requestValidate.message}`)
+    }
+    await this.userService.update(req.params.id,req.body);
+    return  ApiResponse.message(res, 'user updated');
+  }
   
 }
 

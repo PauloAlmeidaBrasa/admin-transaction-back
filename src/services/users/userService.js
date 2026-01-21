@@ -32,7 +32,10 @@ class UserService {
   }
 
   async update(id, data) {
-    return this.userRepository.updateUser(id, data);
+    const idUser = id
+    const fieldsUpdate = data
+
+    return this.userRepository.updateUser(idUser, fieldsUpdate);
   }
 
   async deleteUser(id) {
