@@ -1,6 +1,6 @@
 const { UserService } = require('../../services/users/userService');
 const { UserRepository } = require('../../repositories/user/userRepository');
-// const { UserRequestHandler } = require('./userRequestHandler');
+const { UserRequestHandler } = require('./userRequestHandler');
 
 class UserController {
   constructor(db) {
@@ -10,24 +10,11 @@ class UserController {
   }
 
   all = async (req, res) => {
-    const requestValidate = AuthRequestHandler.validateAuth(
-      req.body?.email,
-      req.body?.password
-    );
+    console.log("req.user.client_id", req.user.client_id)
 
-    if (requestValidate.error) {
-      throw new Error(`User error: ${requestValidate.message}`);
-    }
+    const users = await this.userService.findAll(req.user.client_id);
+    res.json(users);
 
-    const email = req.body.email;
-    const pass = req.body.password;
-
-    const user = await this.userService.authentication({
-      email,
-      password: pass
-    });
-
-    res.json(user);
   }
   
 }

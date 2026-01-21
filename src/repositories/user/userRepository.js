@@ -12,15 +12,15 @@ class UserRepository {
       where: { email }
     });
   }
+
+  async findAllUser(clientId) {
+    return this.User.findAll({
+      where: { client_id: clientId }
+    });
+  }
 }
 
-// class UserRepository {
 
-//   async findAllUser(clientId) {
-//     return User.findAll({
-//       where: { client_id: clientId }
-//     });
-//   }
 
 //   async findByUserId(id) {
 //     return User.findByPk(id);

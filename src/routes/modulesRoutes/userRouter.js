@@ -4,7 +4,7 @@ const UserController = require('../../controllers/user/userController');
 const userRoutes = (db) => {
   const router = Router();
   const controller = new UserController(db);
-  router.get('/user', controller.all  );
+  router.get('/users', controller.all  );
   // router.get('/user/:id', controller.getById);
   // router.post('/user/create', controller.store);
   // router.patch('/user/update/:id', controller.update);
