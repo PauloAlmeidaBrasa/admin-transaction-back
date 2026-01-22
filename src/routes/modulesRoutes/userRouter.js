@@ -6,7 +6,7 @@ const multiTenantMiddlewareFactory = require('../../middlewares/multiTenantMiddl
 const userRoutes = (db) => {
 
   const router = Router();
-  router.use(multiTenantMiddlewareFactory(db))
+  // router.use(/transactionsmultiTenantMiddlewareFactory(db))
 
   const controller = new UserController(db);
   router.get('/users', controller.all  );
