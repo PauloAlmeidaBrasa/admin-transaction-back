@@ -53,6 +53,22 @@ class TransactionController {
     await this.transactionService.deleteTransaction(req.params.id);
     return  ApiResponse.message(res, 'transaction deleted');
   }
+  upload = async (req, res) => {
+    try {
+      if (!req.file) {
+        return res.status(400).json({ error: 'Excel file is required' });
+      }
+
+      await this.transactionService.upload(req.file.buffer);
+
+      return res.status(201).json({
+        message: 'Transactions imported successfully'
+      });
+    } catch (error) {
+      console.error(error);
+      return res.status(500).json({ error: error.message });
+    }
+  }
 
   
 }
