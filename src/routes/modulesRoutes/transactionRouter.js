@@ -5,6 +5,7 @@ const transactionRoutes = (db) => {
   const router = Router();
   const controller = new TransactionController(db);
   router.get('/transactions', controller.all  );
+  router.get('/transaction/:id', controller.getById);
 
   return router;
 };

@@ -1,21 +1,21 @@
 const bcrypt = require('bcrypt');
-const { UserRepository } = require('../../repositories/user/userRepository');
+// const {TransactionRepository } = require('../../repositories/user/userRepository');
 
 class TransactionService {
-  constructor(userRepository) {
-    this.userRepository = userRepository || new UserRepository();
+  constructor(transactionRepo) {
+    this.transactionRepository = transactionRepo;
   }
 
   async findAll(clientId) {
-    return this.userRepository.findAllTransaction(clientId);
+    return this.transactionRepository.findAllTransaction(clientId);
   }
 
-  async getUserById(id) {
-    const user = await this.userRepository.userById(id);
-    if (!user) {
+  async getTransactionById(id) {
+    const transaction = await this.transactionRepository.transactionById(id);
+    if (!transaction) {
       throw new Error('User not found');
     }
-    return user;
+    return transaction;
   }
 
   async createUser(data,clientId) {
