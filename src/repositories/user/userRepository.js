@@ -3,7 +3,7 @@
 class UserRepository {
 //   private user 
   constructor(db) {
-    this.User = db.users;
+    this.User = db.User;
   }
 
   async findByEmail(email) {

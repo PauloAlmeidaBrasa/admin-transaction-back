@@ -1,7 +1,7 @@
 
 class ClientRepository {
   constructor(db) {
-    this.Client = db.client;
+    this.Client = db.Client;
   }
 
   async findAllClient(clientId) {

@@ -1,7 +1,7 @@
 'use strict';
 
 module.exports = (sequelize, DataTypes) => {
-  const Client = sequelize.define('client', {
+  const Client = sequelize.define('Client', {
     id: {
       type: DataTypes.INTEGER,
       primaryKey: true,
@@ -28,18 +28,17 @@ module.exports = (sequelize, DataTypes) => {
     timestamps: false
   });
 
-  Client.associate = models => {
+  Client.associate = (models) => {
     Client.hasMany(models.Transaction, {
       foreignKey: 'client_id',
       sourceKey: 'id',
       as: 'transactions'
     });
-  };
-  Client.associate = models => {
+
     Client.hasMany(models.User, {
       foreignKey: 'client_id',
       sourceKey: 'id',
-      as: 'user'
+      as: 'users'
     });
   };
   return Client;

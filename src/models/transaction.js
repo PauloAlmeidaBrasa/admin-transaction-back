@@ -1,7 +1,7 @@
 'use strict';
 
 module.exports = (sequelize, DataTypes) => {
-  const Transaction = sequelize.define('transaction', {
+  const Transaction = sequelize.define('Transaction', {
     id: {
       type: DataTypes.INTEGER,
       primaryKey: true,
@@ -48,14 +48,13 @@ module.exports = (sequelize, DataTypes) => {
     timestamps: false
   });
 
-  Transaction.associate = models => {
+  Transaction.associate = (models) => {
     Transaction.belongsTo(models.Client, {
       foreignKey: 'client_id',
       targetKey: 'id',
       as: 'client'
     });
-  };
-  Transaction.associate = models => {
+
     Transaction.belongsTo(models.User, {
       foreignKey: 'id_user_transaction',
       targetKey: 'id',

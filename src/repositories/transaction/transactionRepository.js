@@ -1,7 +1,7 @@
 
 class TransactionRepository {
   constructor(db) {
-    this.Transaction = db.transaction;
+    this.Transaction = db.Transaction;
   }
 
   async findAllTransaction(clientId) {
