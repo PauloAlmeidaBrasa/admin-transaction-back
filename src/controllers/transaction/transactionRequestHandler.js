@@ -18,8 +18,8 @@ class TransactionRequestHandler {
       return { error: true, message: 'invalid payload' };
     }
 
-    if (!params.name || typeof params.name !== 'string') {
-      return { error: true, message: 'name missing' };
+    if (!params.ID_user || typeof params.ID_user !== 'string') {
+      return { error: true, message: 'ID_user missing' };
     }
 
     if (!params.email) {

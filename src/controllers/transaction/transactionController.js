@@ -36,6 +36,15 @@ class TransactionController {
     await this.transactionService.update(req.params.id,req.body);
     return  ApiResponse.message(res, 'transaction updated');
   }
+  store = async (req, res) => {
+    const requestValidate = this.requestValidator.validateToCreate(req.body);
+    if(requestValidate.error) {
+      throw new Error(`User error: ${requestValidate.message}`)
+    }
+
+    const userAdded = await this.userService.createUser(req.body,req.clientId);
+    return ApiResponse.message(res, "User added", 201, { idAdded: userAdded });
+  }
   
 }
 
