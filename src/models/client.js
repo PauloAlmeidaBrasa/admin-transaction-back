@@ -28,5 +28,19 @@ module.exports = (sequelize, DataTypes) => {
     timestamps: false
   });
 
+  Client.associate = models => {
+    Client.hasMany(models.Transaction, {
+      foreignKey: 'client_id',
+      sourceKey: 'id',
+      as: 'transactions'
+    });
+  };
+  Client.associate = models => {
+    Client.hasMany(models.User, {
+      foreignKey: 'client_id',
+      sourceKey: 'id',
+      as: 'user'
+    });
+  };
   return Client;
 };
