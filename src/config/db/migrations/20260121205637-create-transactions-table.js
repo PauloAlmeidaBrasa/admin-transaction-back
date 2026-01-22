@@ -20,6 +20,10 @@ module.exports = {
         primaryKey: false,
         allowNull: false
       },
+      id_user_transaction: {
+        type: Sequelize.INTEGER,
+        allowNull: false
+      },
       desc_transaction: {
         type: Sequelize.STRING,
         allowNull: true
@@ -40,6 +44,11 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false
       },
+      client_id: {
+        type: Sequelize.INTEGER,
+        allowNull: false
+      },
+      
     });
   },
 

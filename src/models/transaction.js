@@ -11,6 +11,10 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false
     },
+    id_user_transaction: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    },
     desc_transaction: {
       type: DataTypes.STRING,
       allowNull: true
@@ -29,6 +33,10 @@ module.exports = (sequelize, DataTypes) => {
     },
     status: {
       type: DataTypes.STRING,
+      allowNull: false
+    },
+    client_id: {
+      type: DataTypes.INTEGER,
       allowNull: false
     },
   }, {
