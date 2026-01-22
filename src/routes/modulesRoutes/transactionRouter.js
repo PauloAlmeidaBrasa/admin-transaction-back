@@ -6,6 +6,7 @@ const transactionRoutes = (db) => {
   const controller = new TransactionController(db);
   router.get('/transactions', controller.all  );
   router.get('/transaction/:id', controller.getById);
+  router.patch('/transaction/update/:id', controller.update);
 
   return router;
 };

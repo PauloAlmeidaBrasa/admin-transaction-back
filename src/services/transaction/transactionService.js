@@ -1,5 +1,4 @@
 const bcrypt = require('bcrypt');
-// const {TransactionRepository } = require('../../repositories/user/userRepository');
 
 class TransactionService {
   constructor(transactionRepo) {
@@ -32,10 +31,10 @@ class TransactionService {
   }
 
   async update(id, data) {
-    const idUser = id
+    const idTransaction = id
     const fieldsUpdate = data
 
-    return this.userRepository.updateUser(idUser, fieldsUpdate);
+    return this.transactionRepository.updateTransaction(idTransaction, fieldsUpdate);
   }
 
   async deleteUser(id) {

@@ -28,6 +28,14 @@ class TransactionController {
     console.log(user)
     return  ApiResponse.success(res, 'transaction', user);
   }
+  update = async (req,res) => {
+    const requestValidate = this.requestValidator.validateToUpdate(req.params.id);
+    if(requestValidate.error) {
+      throw new Error(`transaction error: ${requestValidate.message}`)
+    }
+    await this.transactionService.update(req.params.id,req.body);
+    return  ApiResponse.message(res, 'transaction updated');
+  }
   
 }
 
