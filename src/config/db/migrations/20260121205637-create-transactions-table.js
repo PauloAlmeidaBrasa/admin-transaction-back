@@ -44,6 +44,10 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false
       },
+      user_email: {
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
       client_id: {
         type: Sequelize.INTEGER,
         allowNull: false

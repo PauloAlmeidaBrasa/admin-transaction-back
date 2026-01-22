@@ -51,6 +51,13 @@ class TransactionRepository {
       where: { id: idTransaction }
     });
   }
+  async createTransaction(data) {
+    const transaction = await this.Transaction.create(data);
+    return transaction.id;
+  }
+  async bulkCreate(transactions) {
+    this.Transaction.bulkCreate(transactions)
+  }
 }
 
 module.exports = {

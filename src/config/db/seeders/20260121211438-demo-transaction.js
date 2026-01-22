@@ -12,7 +12,8 @@ module.exports = {
         value_in_points: 10,
         value: 100,
         status: 1,
-        client_id: 1
+        client_id: 1,
+        user_email: 'userteste@teste.com'
       },
       {
         ID_User: '3123238322',
@@ -22,7 +23,8 @@ module.exports = {
         value_in_points: 10,
         value: 10,
         status: 1,
-        client_id: 1
+        client_id: 1,
+        user_email: 'userteste@teste.com'
       }
     ]);
   },

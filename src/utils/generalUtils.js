@@ -14,7 +14,26 @@ const isEmpty = (value) => {
   );
 };
 
+const idUserAliases = [
+  'cpf',      // Brazil
+  'ssn',      // USA
+  'dni',      // Spain
+  'nin',      // UK
+  'id_user'   // fallback / generic
+];
+
+
+const resolveIdUser = (row) => {
+  for (const alias of idUserAliases) {
+    if (row[alias]) {
+      return row[alias];
+    }
+  }
+  return null;
+}
+
 module.exports = {
   parseEmail,
-  isEmpty
+  isEmpty,
+  resolveIdUser
 };

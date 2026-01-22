@@ -1,13 +1,14 @@
 const { TransactionService } = require('../../services/transaction/transactionService')
 const { TransactionRepository } = require('../../repositories/transaction/transactionRepository');
+const { UserRepository } = require('../../repositories/user/userRepository');
 const ApiResponse = require('../../utils/http/response');
 const { TransactionRequestHandler } = require('../../controllers/transaction/transactionRequestHandler')
 
 class TransactionController {
   constructor(db) {
-
+    const userRepo = new UserRepository(db)
     const clientRepository = new TransactionRepository(db);
-    this.transactionService = new TransactionService(clientRepository);
+    this.transactionService = new TransactionService(clientRepository,userRepo);
     this.requestValidator = TransactionRequestHandler;
   }
 
@@ -25,7 +26,6 @@ class TransactionController {
 
     const id = req.params.id
     const user = await this.transactionService.getTransactionById(id);
-    console.log(user)
     return  ApiResponse.success(res, 'transaction', user);
   }
   update = async (req,res) => {
@@ -42,9 +42,34 @@ class TransactionController {
       throw new Error(`User error: ${requestValidate.message}`)
     }
 
-    const userAdded = await this.userService.createUser(req.body,req.clientId);
+    const userAdded = await this.transactionService.createUser(req.body,req.clientId);
     return ApiResponse.message(res, "User added", 201, { idAdded: userAdded });
   }
+  delete = async (req,res) => {
+    const requestValidate = this.requestValidator.validateToDelete(req.params.id);
+    if(requestValidate.error) {
+      throw new Error(`transaction error: ${requestValidate.message}`)
+    }
+    await this.transactionService.deleteTransaction(req.params.id);
+    return  ApiResponse.message(res, 'transaction deleted');
+  }
+  upload = async (req, res) => {
+    try {
+      if (!req.file) {
+        return res.status(400).json({ error: 'Excel file is required' });
+      }
+
+      await this.transactionService.upload(req.file.buffer);
+
+      return res.status(201).json({
+        message: 'Transactions imported successfully'
+      });
+    } catch (error) {
+      console.error(error);
+      return res.status(500).json({ error: error.message });
+    }
+  }
+
   
 }
 
