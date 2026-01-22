@@ -42,9 +42,18 @@ class TransactionController {
       throw new Error(`User error: ${requestValidate.message}`)
     }
 
-    const userAdded = await this.userService.createUser(req.body,req.clientId);
+    const userAdded = await this.transactionService.createUser(req.body,req.clientId);
     return ApiResponse.message(res, "User added", 201, { idAdded: userAdded });
   }
+  delete = async (req,res) => {
+    const requestValidate = this.requestValidator.validateToDelete(req.params.id);
+    if(requestValidate.error) {
+      throw new Error(`transaction error: ${requestValidate.message}`)
+    }
+    await this.transactionService.deleteTransaction(req.params.id);
+    return  ApiResponse.message(res, 'transaction deleted');
+  }
+
   
 }
 

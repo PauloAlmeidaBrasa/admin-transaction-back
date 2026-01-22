@@ -17,17 +17,12 @@ class TransactionService {
     return transaction;
   }
 
-  async createUser(data,clientId) {
-    
-    const existing = await this.userRepository.findByEmail(data.email);
-    if (existing) {
-      throw new Error('Email already exists');
-    }
+  async createTransaction(data,clientId) {
 
-    const userData = await this.prepareUserData(data, clientId);
+    const transactionData = await this.prepareUserData(data, clientId);
 
-    const userIdCreated = await this.userRepository.createUser(userData);
-    return userIdCreated;
+    const transactionByIdCreated = await this.transactionRepository.createTransaction(transactionData);
+    return transactionByIdCreated;
   }
 
   async update(id, data) {
@@ -37,10 +32,11 @@ class TransactionService {
     return this.transactionRepository.updateTransaction(idTransaction, fieldsUpdate);
   }
 
-  async deleteUser(id) {
-    await this.userRepository.delete(id);
+async deleteTransaction(id) {
+    await this.transactionRepository.delete(id);
   }
-  async prepareUserData(data, clientId) {
+
+  async prepareData(data, clientId) {
     const hashedPassword = await bcrypt.hash(data.password, 10);
     const userData = {
       ...data,
@@ -48,15 +44,11 @@ class TransactionService {
       client_id: clientId,
       password: hashedPassword,
       created_at: Date.now(),
-      access_level: 3,
-      updated_at: Date.now()
     };
-
-    delete userData.cpf;
     
-
     return userData;
   }
+
 }
 
 module.exports = {
