@@ -55,45 +55,15 @@ class UserRepository {
       where: { id: idUser }
     });
   }
+  async findByEmailAndIdUser(email, ID_user) {
+    return this.User.findOne({
+      where: {
+        email,
+        ID_user      }
+    });
+  }
 }
 
-
-
-//   async findByUserId(id) {
-//     return User.findByPk(id);
-//   }
-
-//   async createUser(data) {
-//     const user = await User.create(data);
-//     return user.id;
-//   }
-
-//   async findByEmail(email) {
-//     return User.findOne({
-//       where: { email }
-//     });
-//   }
-
-//   async updateUser(id, data) {
-//     const user = await this.findByUserId(id);
-//     if (!user) {
-//       const error = new Error(`Record not found for ID=${id}`);
-//       error.status = 404;
-//       throw error;
-//     }
-//     return user.update(data);
-//   }
-
-//   async deleteUser(id) {
-//     const user = await this.findByUserId(id);
-//     if (!user) {
-//       const error = new Error(`Record not found for ID=${id}`);
-//       error.status = 404;
-//       throw error;
-//     }
-//     await user.destroy();
-//   }
-// }
 
 module.exports = {
   UserRepository

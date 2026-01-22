@@ -1,11 +1,14 @@
 const bcrypt = require('bcrypt');
 const XLSX = require('xlsx');
 const parseExcelDate = require('../../infra/xls/xls');
+const TransactionImportRequestHandler =
+  require('../../controllers/transaction/transactionImportRequestHandler');
 
 
 
 class TransactionService {
-  constructor(transactionRepo) {
+  constructor(transactionRepo,userRepo) {
+    this.userRepository = userRepo
     this.transactionRepository = transactionRepo;
   }
 
@@ -39,27 +42,56 @@ class TransactionService {
 	async deleteTransaction(id) {
 		await this.transactionRepository.delete(id);
 	}
-	async upload(fileBuffer) {
-		const workbook = XLSX.read(fileBuffer, { type: 'buffer' });
-		const sheetName = workbook.SheetNames[0];
-		const sheet = workbook.Sheets[sheetName];
+  async upload(fileBuffer) {
+    const workbook = XLSX.read(fileBuffer, { type: 'buffer' });
+    const sheet = workbook.Sheets[workbook.SheetNames[0]];
+    const rows = XLSX.utils.sheet_to_json(sheet);
 
-		const rows = XLSX.utils.sheet_to_json(sheet);
+    const errors = [];
 
-		
+    rows.forEach((row, index) => {
+      const validation =
+        TransactionImportRequestHandler.validateRow(row, index + 2);
 
-		const transactions = rows.map(row => ({
-			ID_user: row.cpf,
-			id_user_transaction: 1,
-			desc_transaction: row.desc_transaction,
-			date_transaction: parseExcelDate(row.date_transaction),
-			value_in_points: Number(row.value_in_points),
-			value: Number(row.value),
-			client_id: 1,
-			status: row.status
-		}));
-		await this.transactionRepository.bulkCreate(transactions);
-	}
+      if (validation.error) {
+        errors.push(validation.message);
+      }
+    });
+
+    if (errors.length) {
+      throw new Error(errors.join(' | '));
+    }
+
+    const validTransactions = await Promise.all(
+      rows.map(async (row, index) => {
+        console.log(row)
+        const user = await this.userRepository.findByEmailAndIdUser(
+          row.user_email,
+          row.cpf
+        );
+
+        if (!user) {
+          throw new Error(
+            `User not found at line ${index + 2} (email=${row.email}, cpf=${row.cpf})`
+          );
+        }
+
+        return {
+          ID_user: row.cpf,
+          id_user_transaction: user.id,
+          desc_transaction: row.desc_transaction,
+          date_transaction: parseExcelDate(row.date_transaction),
+          value_in_points: Number(row.value_in_points),
+          value: Number(row.value),
+          client_id: user.client_id,
+          status: row.status,
+          user_email: row.user_email
+        };
+      })
+    );
+    await this.transactionRepository.bulkCreate(validTransactions);
+  }
+
 
 	async prepareData(data, clientId) {
 		const hashedPassword = await bcrypt.hash(data.password, 10);
@@ -75,6 +107,7 @@ class TransactionService {
 	}
 
 }
+
 
 module.exports = {
   TransactionService

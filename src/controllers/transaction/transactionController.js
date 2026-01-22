@@ -1,13 +1,14 @@
 const { TransactionService } = require('../../services/transaction/transactionService')
 const { TransactionRepository } = require('../../repositories/transaction/transactionRepository');
+const { UserRepository } = require('../../repositories/user/userRepository');
 const ApiResponse = require('../../utils/http/response');
 const { TransactionRequestHandler } = require('../../controllers/transaction/transactionRequestHandler')
 
 class TransactionController {
   constructor(db) {
-
+    const userRepo = new UserRepository(db)
     const clientRepository = new TransactionRepository(db);
-    this.transactionService = new TransactionService(clientRepository);
+    this.transactionService = new TransactionService(clientRepository,userRepo);
     this.requestValidator = TransactionRequestHandler;
   }
 
@@ -25,7 +26,6 @@ class TransactionController {
 
     const id = req.params.id
     const user = await this.transactionService.getTransactionById(id);
-    console.log(user)
     return  ApiResponse.success(res, 'transaction', user);
   }
   update = async (req,res) => {
