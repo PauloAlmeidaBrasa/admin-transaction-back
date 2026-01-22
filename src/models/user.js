@@ -44,5 +44,20 @@ module.exports = (sequelize, DataTypes) => {
     timestamps: false
   });
 
+  User.associate = models => {
+    User.belongsTo(models.Client, {
+      foreignKey: 'client_id',
+      targetKey: 'id',
+      as: 'client'
+    });
+  };
+  User.associate = models => {
+    User.belongsTo(models.Transaction, {
+      foreignKey: 'id_user_transaction',
+      targetKey: 'id',
+      as: 'transaction'
+    });
+  };
+
   return User;
 };
