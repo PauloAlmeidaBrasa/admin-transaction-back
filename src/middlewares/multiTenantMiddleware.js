@@ -7,12 +7,12 @@ function multiTenantMiddlewareFactory(db) {
       // console.log(req)
       const host = req.headers.host;
       if (!host) return res.status(400).json({ error: 'Host header missing' });
-
-      if (host.startsWith('0.0.0.0') || host.startsWith('localhost')) {
+      if (host.startsWith('0.0.0.0') || host.startsWith('localhost') || host.startsWith('127.0.0.1')) {
         //dev//
         req.clientId = 1;
         return next();  
       }
+      console.log('22')
 
 
       const subdomain = host.split('.')[0];
