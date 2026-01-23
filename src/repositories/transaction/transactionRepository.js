@@ -23,7 +23,7 @@ class TransactionRepository {
     const transaction = await this.Transaction.create(data);
     return transaction.id;
   }
-   async transactionById(idTransaction) {
+  async transactionById(idTransaction) {
     const transaction = await this.Transaction.findOne({
       attributes: [
         'id',
@@ -58,7 +58,24 @@ class TransactionRepository {
   async bulkCreate(transactions) {
     this.Transaction.bulkCreate(transactions)
   }
+  async transactionByUserId(idUser) {
+    const transactions = await this.Transaction.findOne({
+      attributes: [
+        'id',
+        'ID_user',
+        'id_user_transaction',
+        'desc_transaction',
+        'date_transaction',
+        'value_in_points',
+        'value',
+        'status'
+      ],
+      where: { id_user_transaction: idUser }
+    })
+    return transactions;
+  }
 }
+
 
 module.exports = {
   TransactionRepository

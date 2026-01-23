@@ -12,7 +12,17 @@ class TransactionRequestHandler {
 
     return { error: false, message: '' };
   }
+ static validateToGetByUserId(id) {
+    if (!id) {
+      return { error: true, message: 'id missing' };
+    }
 
+    if (isNaN(Number(id))) {
+      return { error: true, message: 'id bad format' };
+    }
+
+    return { error: false, message: '' };
+  }
   static validateToCreate(params) {
     if (!params || typeof params !== 'object') {
       return { error: true, message: 'invalid payload' };

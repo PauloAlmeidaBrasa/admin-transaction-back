@@ -53,6 +53,16 @@ class TransactionController {
     await this.transactionService.deleteTransaction(req.params.id);
     return  ApiResponse.message(res, 'transaction deleted');
   }
+  getByUserId = async (req,res) => {
+    const requestValidate = this.requestValidator.validateToGetByUserId(req.params.id);
+    if(requestValidate.error) {
+      throw new Error(`transaction error: ${requestValidate.message}`)
+    }
+
+    const id = req.params.id
+    const user = await this.transactionService.getTransactionByUserId(id);
+    return  ApiResponse.success(res, 'transaction', user);
+  }
   upload = async (req, res) => {
     try {
       if (!req.file) {

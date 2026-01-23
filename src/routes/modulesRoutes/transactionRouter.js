@@ -11,6 +11,7 @@ const transactionRoutes = (db) => {
   router.patch('/transaction/update/:id', controller.update);
   router.post('/transaction/create', controller.store);
   router.post('/transaction/delete/:id', controller.delete);
+  router.get('/transaction/by-user/:id', controller.getByUserId);
   router.post('/transaction/upload',  excelMiddleware.single('file'), controller.upload);
   return router;
 };

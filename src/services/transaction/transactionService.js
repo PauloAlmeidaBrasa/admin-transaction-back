@@ -91,6 +91,13 @@ class TransactionService {
     );
     await this.transactionRepository.bulkCreate(validTransactions);
   }
+  async getTransactionByUserId(id) {
+    const transaction = await this.transactionRepository.transactionByUserId(id);
+    if (!transaction) {
+      throw new Error('User not found');
+    }
+    return transaction;
+  }
 
 
 	async prepareData(data, clientId) {
