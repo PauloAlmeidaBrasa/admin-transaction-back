@@ -16,6 +16,10 @@ class TransactionService {
     return this.transactionRepository.findAllTransaction(clientId);
   }
 
+  async getByDate(startDate, endDate, clientId) {
+    return this.transactionRepository.getByDate(startDate, endDate, clientId);
+  }
+
   async getTransactionById(id) {
     const transaction = await this.transactionRepository.transactionById(id);
     if (!transaction) {

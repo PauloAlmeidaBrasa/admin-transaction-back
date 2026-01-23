@@ -64,6 +64,16 @@ class TransactionRequestHandler {
 
     return { error: false, message: '' };
   }
+  static validateToByDate(params) {
+    if (!params.start_date) {
+
+      return { error: true, message: 'start_date missing' };
+    }
+    if (!params.end_date) {
+      return { error: true, message: 'end_date missing' };
+    }
+    return { error: false, message: '' };
+  }
 }
 
 module.exports = {

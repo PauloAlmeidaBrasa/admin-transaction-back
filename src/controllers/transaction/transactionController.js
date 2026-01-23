@@ -41,8 +41,8 @@ class TransactionController {
    */
   all = async (req, res) => {
 
-    const clients = await this.transactionService.findAll(req.user.client_id);
-    return ApiResponse.success(res, 'transactions', clients);
+    const transactions = await this.transactionService.findAll(req.user.client_id);
+    return ApiResponse.success(res, 'transactions', transactions);
 
   }
   /**
@@ -83,14 +83,15 @@ class TransactionController {
    *         description: Internal server error
    */
   getById = async (req,res) => {
+    console.log("jhhhhh")
     const requestValidate = this.requestValidator.validateToGetById(req.params.id);
     if(requestValidate.error) {
       throw new Error(`transaction error: ${requestValidate.message}`)
     }
 
     const id = req.params.id
-    const user = await this.transactionService.getTransactionById(id);
-    return  ApiResponse.success(res, 'transaction', user);
+    const transaction = await this.transactionService.getTransactionById(id);
+    return  ApiResponse.success(res, 'transaction', transaction);
   }
   /**
    * @swagger
@@ -205,8 +206,8 @@ class TransactionController {
       throw new Error(`User error: ${requestValidate.message}`)
     }
 
-    const userAdded = await this.transactionService.createUser(req.body,req.clientId);
-    return ApiResponse.message(res, "User added", 201, { idAdded: userAdded });
+    const transactionAdded = await this.transactionService.createUser(req.body,req.clientId);
+    return ApiResponse.message(res, "User added", 201, { idAdded: transactionAdded });
   }
   /**
    * @swagger
@@ -302,6 +303,64 @@ class TransactionController {
       console.error(error);
       return res.status(500).json({ error: error.message });
     }
+  }
+
+  /**
+   * @swagger
+   * /v1/transactions/search:
+   *   post:
+   *     summary: Search transactions by date range
+   *     description: Retrieve all transactions within a specified date range for the authenticated client
+   *     tags:
+   *       - Transactions
+   *     security:
+   *       - bearerAuth: []
+   *     requestBody:
+   *       required: true
+   *       content:
+   *         application/json:
+   *           schema:
+   *             type: object
+   *             required:
+   *               - start_date
+   *               - end_date
+   *             properties:
+   *               start_date:
+   *                 type: string
+   *                 format: date
+   *                 example: '2025-01-01'
+   *               end_date:
+   *                 type: string
+   *                 format: date
+   *                 example: '2025-12-31'
+   *     responses:
+   *       200:
+   *         description: Transactions found within date range
+   *         content:
+   *           application/json:
+   *             schema:
+   *               type: object
+   *               properties:
+   *                 transaction:
+   *                   type: array
+   *                   items:
+   *                     $ref: '#/components/schemas/Transaction'
+   *       400:
+   *         description: Bad request - Invalid date format or missing required fields
+   *       401:
+   *         description: Unauthorized - Missing or invalid token
+   *       500:
+   *         description: Internal server error
+   */
+  byDate = async (req, res) => {
+    const requestValidate = this.requestValidator.validateToByDate(req.body);
+    console.log(requestValidate)
+
+    if(requestValidate.error) {
+      throw new Error(`transaction error: ${requestValidate.message}`)
+    }
+    let transaction = await this.transactionService.getByDate(req.body.start_date, req.body.end_date, req.clientId);
+    return  ApiResponse.success(res, 'transaction', transaction);
   }
 
   

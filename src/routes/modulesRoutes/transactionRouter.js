@@ -12,6 +12,7 @@ const transactionRoutes = (db) => {
   router.post('/transaction/create', controller.store);
   router.post('/transaction/delete/:id', controller.delete);
   router.post('/transaction/upload',  excelMiddleware.single('file'), controller.upload);
+  router.post('/transaction/by-date', controller.byDate);
   return router;
 };
 
