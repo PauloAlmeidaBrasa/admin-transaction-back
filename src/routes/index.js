@@ -6,11 +6,14 @@ const {
   transactionRoutes
 } = require('../routes/modulesRoutes');
 const authenticationRoutes = require('./authenticationRouter');
+const multiTenantMiddlewareFactory = require('../middlewares/multiTenantMiddleware')
+
 
 const registerRouter = (db) => {
   const router = Router();
   const API_VERSION = process.env.API_VERSION || 'v1';
 
+  router.use(multiTenantMiddlewareFactory(db));
 
   // Public routes
   router.use(`/${API_VERSION}`, authenticationRoutes(db));
