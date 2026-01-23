@@ -49,7 +49,7 @@ class UserService {
       client_id: clientId,
       password: hashedPassword,
       created_at: Date.now(),
-      access_level: 3,
+      access_level: data.access_level,
       updated_at: Date.now()
     };
 

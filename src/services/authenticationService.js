@@ -38,7 +38,8 @@ class AuthenticationService {
       expiresIn: '4d',
       user: {
         id: user.id,
-        email: user.email
+        email: user.email,
+        access_level: user.access_level
       }
     };
   }
